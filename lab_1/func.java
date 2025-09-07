@@ -2,7 +2,7 @@
 public class func{
 
 public static int Fact(int arg){
-    
+
     int res = 1;
 
     for(int i = 1; i<=arg; i++){
@@ -15,7 +15,9 @@ public static int Fact(int arg){
 
 }
     
-public static double CosTaylor(double arg1, double k){ 
+public static double CosTaylor(double arg1, int k){ 
+    
+    if(k<=0) throw new IllegalArgumentException("Degree must be natural!");
 
     double res = 1;
     double member = 1;
