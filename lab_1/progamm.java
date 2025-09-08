@@ -13,12 +13,21 @@ public class progamm{
         String k_string = sc.nextLine();
 
         x = Double.parseDouble(x_string);
+
+        while(x>2*Math.PI){
+            x-=2*Math.PI;
+        }
+        
+        while(x<-2*Math.PI){
+            x+=2*Math.PI;
+        }
+
         k = Integer.parseInt(k_string);
 
        
         try {
              System.out.print("Taylor cos: ");
-             System.out.printf( "%.3f%n", func.CosTaylor(x, k));
+             System.out.printf( "%.3f%n", Funcs.cosTaylor(x, k));
         } catch (Exception e) {
             System.err.println(e);
             return;

@@ -1,5 +1,4 @@
-
-public class func{
+public class Funcs{
 
 public static int Fact(int arg){
 
@@ -12,10 +11,9 @@ public static int Fact(int arg){
     }
 
     return res;
-
 }
     
-public static double CosTaylor(double arg1, int k){ 
+public static double  cosTaylor(double arg1, int k){ 
     
     if(k<=0) throw new IllegalArgumentException("Degree must be natural!");
 
@@ -40,12 +38,10 @@ public static double CosTaylor(double arg1, int k){
         
         res += member;
 
-     if(Math.abs(member)>1) System.out.println(member);
+     if(Math.abs(member) > 1) System.out.println(member);
         
     }
 
     return res;
-
-}
-
+    }
 }
