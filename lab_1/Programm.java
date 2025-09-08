@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 
-public class progamm{
+public class Programm{
 
     static double x;
     static int k;
@@ -14,12 +14,7 @@ public class progamm{
 
         x = Double.parseDouble(x_string);
         k = Integer.parseInt(k_string);
-       
-        
-        
-        
-       
-       
+         
        
         try {
              System.out.print("Taylor cos: ");
