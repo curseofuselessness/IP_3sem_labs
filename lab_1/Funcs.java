@@ -16,13 +16,20 @@ public static int Fact(int arg){
 public static double  cosTaylor(double arg1, int k){ 
     
     if(k<=0) throw new IllegalArgumentException("Degree must be natural!");
-
+    
     double res = 1;
     double member = 1;
     double accuracy = Math.pow(10, -1*k);
     int xDegree = 2;
-    int memberFactorial = 2;
     byte pre = 1;
+    
+    while(arg1>360){
+         arg1-=360;
+    }  
+    while(arg1<-2*360){
+         arg1+=2*360;
+    }
+
 
     while(Math.abs(member) >= Math.abs(accuracy) ){
 
@@ -30,15 +37,21 @@ public static double  cosTaylor(double arg1, int k){
 
         pre*=-1;
         member*=pre;
-        member*=Math.pow(Math.toRadians(arg1), xDegree);
-        member/=Fact(memberFactorial);
+
+        for(int i = 1; i <= xDegree; i++){
+
+          member*=Math.toRadians(arg1);
+          member/=i;   
+
+        }
+       
+       
         
         xDegree+=2;
-        memberFactorial+=2;
         
         res += member;
 
-     if(Math.abs(member) > 1) System.out.println(member);
+    // if(Math.abs(member) > 1) System.out.println(member);
         
     }
 
