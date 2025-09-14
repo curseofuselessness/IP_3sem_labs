@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: org.AppTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.036 s <<< FAILURE! - in org.AppTest
+testSingleColumn(org.AppTest)  Time elapsed: 0.003 s  <<< FAILURE!
+java.lang.AssertionError: expected:<-1> but was:<3>
+	at org.AppTest.testSingleColumn(AppTest.java:47)
+
+testCustomDefaultValue(org.AppTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.ArrayIndexOutOfBoundsException: Index 999 out of bounds for length 2
+	at org.AppTest.testCustomDefaultValue(AppTest.java:75)
+
