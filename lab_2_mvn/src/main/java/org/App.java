@@ -14,10 +14,10 @@ public class App{
         
         sc.close();
 
-        int height = Integer.parseInt(stringHeight);
+        int height = Integer.parseInt(stringHeight);    
         int width = Integer.parseInt(stringWidth);
 
-        int[][] matrix = new int[width+1][height+1];
+        int[][] matrix = new int[height][width];
 
         int MaxElement = -1;
 
@@ -25,9 +25,10 @@ public class App{
 
             for(int j = 0; j < width; j++){
 
-                matrix[i][j] = random.nextInt(11);
+                matrix[i][j] = random.nextInt(100);
 
                 System.out.print(matrix[i][j]);
+
                 System.out.print("\t");
 
             }
