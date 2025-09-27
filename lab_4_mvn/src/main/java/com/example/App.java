@@ -14,41 +14,44 @@ public class App
 
     public static char[] decrypt( String args)
     {
+
         char[] textChar = args.toCharArray();
         
         char[] decryptedText = new char[args.length()];
 
-        int step;
+        int step = args.length() / 3;
 
-        if(args.length() % 3 == 0){
-            step = args.length() / 3;
+        int stepF = 0;
+        int stepS = 0;
+
+        if(args.length() % 3 == 2){
+            stepF = 1;
+            stepS = 1;
         }
-        else{
-            System.err.println("ERROR: invalid input");
-            String er = "ERROR";
-            char[] erChar = er.toCharArray();
-            return erChar;
+         if(args.length() % 3 == 1){
+            stepF = 1;
+            stepS = 0;
         }
         
-       
-        int decryptI = 0;
-        int argsI = 0;
+        
+        int textI = 0;
+            for(int i = 0; i < step + stepF; i++){ // 147258369
+                decryptedText[textI] = textChar[i]; 
+                textI+=3;
+            }
+            textI = 1;
+            for(int i = step  + stepF; i < step*2 + stepS  + stepF; i++){ // 147258369
+                decryptedText[textI] = textChar[i]; 
+                textI+=3;   
+            }
+            textI = 2;
+            for(int i = step*2 + stepS + stepF; i < args.length(); i++){ // 147258369
+                decryptedText[textI] = textChar[i]; 
+                textI+=3;   
+            }
+            
 
-        while(argsI != args.length() - 1){  // 147258369
-            decryptedText[decryptI++] = textChar[argsI];
-            argsI += 3;
-            if(argsI / (args.length() - 0) >= 1){
-                 argsI %= (args.length() - 0);
-                 argsI++;
-            }
-            else{
-                argsI %= (args.length() - 0);
-            }
-            
-            
-            
-        }
-        decryptedText[decryptI++] = textChar[argsI];
+        
         
 
         return decryptedText;
