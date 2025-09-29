@@ -35,17 +35,20 @@ public class App
 
     }
     public static Vector<String> splitToWords(String line){
+   
+    Pattern pattern = Pattern.compile("[^\\s,.]+");
+    
+    Matcher matcher = pattern.matcher(line);
 
-        Pattern pattern = Pattern.compile("[a-zA-z]+");
+    Vector<String> wordsArray = new Vector<>();
+
+    while (matcher.find()) {
+        String word = matcher.group();
         
-        Matcher matcher = pattern.matcher(line);
-
-        Vector<String> wordsArray = new Vector<>();
-
-        while (matcher.find()) {
-        wordsArray.add(matcher.group());
+        if(!word.matches("\\d+")) {
+            wordsArray.add(word);
         }
-              return wordsArray;  
-              
     }
+    return wordsArray;  
+}
 }
