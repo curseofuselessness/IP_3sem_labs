@@ -29,7 +29,7 @@ public class FolderZipper {
 
                     } catch (IOException e) {
 
-                        System.err.println("Ошибка при добавлении файла: " + path + " → " + e.getMessage());
+                        System.err.println("Ошибка при добавлении файла: " + path);
 
                     }
                 });
