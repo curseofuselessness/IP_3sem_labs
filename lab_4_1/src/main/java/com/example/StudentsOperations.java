@@ -83,7 +83,7 @@ public class StudentsOperations {
                 writeStudents(outputFile, result);
                 
             } catch (IOException e) {
-                System.out.println("Ошибка: " + e.getMessage());
+                System.out.println("Ошибка");
             }
         }
         
@@ -103,6 +103,7 @@ public class StudentsOperations {
                     String[] parts = line.split(" ");
 
                     if (parts.length >= 4) {
+
                         long num = Long.parseLong(parts[0].trim());
                         String name = parts[1].trim();
                         int group = Integer.parseInt(parts[2].trim());
@@ -119,9 +120,11 @@ public class StudentsOperations {
     
     static void writeStudents(String filename, List<Student> students) throws IOException {
         try (FileWriter writer = new FileWriter(filename)) {
+
             for (Student student : students) {
                 writer.write(student.toString() + "\n");
             }
+            
         }
     }
     
