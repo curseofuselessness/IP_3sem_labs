@@ -3,10 +3,13 @@ package com.example;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class App 
 {
+
+    
     public static void main( String[] args )
     {
         try {
@@ -18,7 +21,15 @@ public class App
                 .thenComparing(Hotel::getStarsAmount).reversed() 
             );
             
+            System.out.println("Task 1: \n");
             Writer.printHotelsByCity(hotels);
+            System.out.println("\n Task 2: \n");
+            System.out.println(" ввведите название города: ");
+
+            Scanner sc = new Scanner(System.in);
+            String tempCity = sc.nextLine().trim();
+
+            Writer.printHotelsByCityName(hotels, tempCity);
             
         } catch (IOException e) {
             System.err.println("Ошибка чтения файла: " + e.getMessage());

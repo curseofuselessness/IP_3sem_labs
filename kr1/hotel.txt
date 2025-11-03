@@ -1,3 +1,20 @@
-Москва Гранд Плаза 4
-Санкт-Петербург Отель Нева 4
-Казань Люкс Суитс 4
+Moscow Grand 4
+Moscow Comfort 2
+Moscow Azimut 3
+Moscow Metro 4
+SPb Neva 4
+SPb City 3
+SPb Astoria 4
+Kazan Lux 4
+Kazan Tatarstan 3
+Kazan Korston 4
+Sochi Sea 4
+Sochi Prime 2
+Sochi Pearl 3
+Ekaterinburg High 4
+Ekaterinburg Hyatt 4
+Novosibirsk Marriott 4
+Novosibirsk Siberia 3
+Kaliningrad Amber 4
+Krasnodar Kuban 3
+Vladivostok Ocean 4

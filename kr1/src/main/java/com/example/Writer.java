@@ -32,5 +32,22 @@ public class Writer {
         System.out.println("Всего отелей: " + hotels.size());
     }
 
+     public static void printHotelsByCityName(List<Hotel> hotels, String cityName) {
+        System.out.println("Отели в городе " + cityName + ":");
+        System.out.println("-------------------");
+        
+        boolean found = false;
+        
+        for (Hotel hotel : hotels) {
+            if (hotel.getCity().equalsIgnoreCase(cityName)) {
+                System.out.printf("Звёзд: %d - %s%n", hotel.getStarsAmount(), hotel.getName());
+                found = true;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Отелей не найдено");
+        }
+    }
 
 }
