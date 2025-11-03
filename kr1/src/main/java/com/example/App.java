@@ -30,6 +30,12 @@ public class App
             String tempCity = sc.nextLine().trim();
 
             Writer.printHotelsByCityName(hotels, tempCity);
+
+            System.out.println("\n Task 3: \n");
+            System.out.println(" ввведите название отеля: ");
+            String tempHotel = sc.nextLine().trim();
+
+            Writer.printCitiesByHotelName(hotels, tempHotel);
             
         } catch (IOException e) {
             System.err.println("Ошибка чтения файла: " + e.getMessage());

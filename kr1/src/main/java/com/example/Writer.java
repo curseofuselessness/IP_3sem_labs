@@ -50,4 +50,22 @@ public class Writer {
         }
     }
 
+     public static void printCitiesByHotelName(List<Hotel> hotels, String hotelName) {
+        System.out.println("Города с отелем '" + hotelName + "':");
+        System.out.println("-------------------");
+        
+        boolean found = false;
+        
+        for (Hotel hotel : hotels) {
+            if (hotel.getName().equalsIgnoreCase(hotelName)) {
+                System.out.printf("Звёзд: %d - %s%n", hotel.getStarsAmount(), hotel.getCity());
+                found = true;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Отель не найден");
+        }
+    }
+
 }
