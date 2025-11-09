@@ -1,4 +1,5 @@
 package com.example;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,16 +7,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 class Student {
     long num;
     String name;
     int group;
     double grade;
+
+    public Student() {
+    }
     
     public Student(long num, String name, int group, double grade) {
         this.num = num;
         this.name = name;
         this.group = group;
+        this.grade = grade;
+    }
+    
+    // ГЕТТЕРЫ
+    public long getNum() {
+        return num;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public int getGroup() {
+        return group;
+    }
+    
+    public double getGrade() {
+        return grade;
+    }
+    
+    // СЕТТЕРЫ
+    public void setNum(long num) {
+        this.num = num;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public void setGroup(int group) {
+        this.group = group;
+    }
+    
+    public void setGrade(double grade) {
         this.grade = grade;
     }
     
@@ -34,7 +74,7 @@ class Student {
 
 public class StudentsOperations {
     static Scanner scanner = new Scanner(System.in);
-    
+    static ObjectMapper mapper = new ObjectMapper();
     public static void main(String[] args) {
         System.out.println("ОПЕРАЦИИ НАД ФАЙЛАМИ СТУДЕНТОВ");
         
@@ -66,24 +106,28 @@ public class StudentsOperations {
                 
                 List<Student> result;
                 
-                if (choice == 1) {
-                    result = union(setA, setB);
-                    System.out.println("Объединение завершено. Результат: " + result.size() + " записей");
-                } else if (choice == 2) {
-                    result = intersection(setA, setB);
-                    System.out.println("Пересечение завершено. Результат: " + result.size() + " записей");
-                } else if (choice == 3) {
-                    result = difference(setA, setB);
-                    System.out.println("Разность завершено. Результат: " + result.size() + " записей");
-                } else {
-                    System.out.println("Неверный выбор!");
-                    continue;
+                switch (choice) {
+                    case 1:
+                        result = union(setA, setB);
+                        System.out.println("Объединение завершено. Результат: " + result.size() + " записей");
+                        break;
+                    case 2:
+                        result = intersection(setA, setB);
+                        System.out.println("Пересечение завершено. Результат: " + result.size() + " записей");
+                        break;
+                    case 3:
+                        result = difference(setA, setB);
+                        System.out.println("Разность завершено. Результат: " + result.size() + " записей");
+                        break;
+                    default:
+                        System.out.println("Неверный выбор!");
+                        continue;
                 }
                 
                 writeStudents(outputFile, result);
                 
             } catch (IOException e) {
-                System.out.println("Ошибка");
+                System.out.println("Ошибка "  + e);
             }
         }
         
@@ -92,6 +136,7 @@ public class StudentsOperations {
     
     static List<Student> readStudents(String filename) throws IOException {
         List<Student> students = new ArrayList<>();
+                  
 
         try (FileReader reader = new FileReader(filename); 
         Scanner fileScanner = new Scanner(reader)) {
@@ -120,6 +165,9 @@ public class StudentsOperations {
     
     static void writeStudents(String filename, List<Student> students) throws IOException {
         try (FileWriter writer = new FileWriter(filename)) {
+            
+            File file = new File("example.json");
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, students);
 
             for (Student student : students) {
                 writer.write(student.toString() + "\n");

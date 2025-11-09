@@ -1,0 +1,16 @@
+[ {
+  "num" : 1122,
+  "name" : "Kirill",
+  "group" : 6,
+  "grade" : 2.0
+}, {
+  "num" : 9932,
+  "name" : "Lesha",
+  "group" : 10,
+  "grade" : 1.0
+}, {
+  "num" : 1122,
+  "name" : "den",
+  "group" : 6,
+  "grade" : 2.0
+} ]
