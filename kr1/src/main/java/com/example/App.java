@@ -21,6 +21,7 @@ public class App
                 .thenComparing(Hotel::getStarsAmount).reversed() 
             );
             
+            
             System.out.println("Task 1: \n");
             Writer.printHotelsByCity(hotels);
             System.out.println("\n Task 2: \n");
