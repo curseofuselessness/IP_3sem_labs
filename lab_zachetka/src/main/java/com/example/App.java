@@ -1,6 +1,8 @@
 package com.example;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +12,8 @@ import java.util.Scanner;
 
 class GradeBook {
 
-    public studentInfo student;
-    public sessionInfo session;
+    public studentInfo student = new studentInfo();
+    public sessionInfo session = new sessionInfo();
 
     class studentInfo {
 
@@ -62,21 +64,32 @@ class GradeBook {
 
 class ReadWrite {
 
-    static ArrayList<GradeBook> read(String filename) {
+    static ArrayList<GradeBook> read(String filename) throws FileNotFoundException {
         ArrayList<GradeBook> out = new ArrayList<>();
         
-        Scanner scanner = new Scanner(filename);
+        Scanner scanner = new Scanner(new File(filename));
+
+        GradeBook gradeBook = new GradeBook();
 
         while (scanner.hasNextLine()) {
-            
+
+           
+
             String line = scanner.nextLine();
-            System.out.println(line);
-            String[] words = line.split(":");
+
+            if(line.isEmpty()) {
+                out.add(gradeBook);
+                gradeBook = new GradeBook();
+                continue;
+            }
+
             
+            String[] words = line.split(":");
+
             String field = words[0];
             String info = words[1];
 
-            GradeBook gradeBook = new GradeBook();
+           
                 
             switch (field) {
                 case "FIO":
@@ -89,18 +102,17 @@ class ReadWrite {
                     gradeBook.student.specialization = info;
                     break;
                 case "Year":
-                    gradeBook.student.year = Integer.parseInt(info);
+                    gradeBook.student.year = Integer.parseInt(info.trim());
                     break;
                  case "Group":
-                    gradeBook.student.group = Integer.parseInt(info);
+                    gradeBook.student.group = Integer.parseInt(info.trim());
                     break;    
                 case "grade":
                     String[] grade = info.trim().split(" ");
-                    gradeBook.session.grades.put(grade[0], Integer.parseInt(grade[1]));
-                case "":
-                    out.add(gradeBook);
-                    gradeBook = new GradeBook();
+                    gradeBook.session.grades.put(grade[0], Integer.parseInt(grade[1].trim()));
+                    break;
                 default:
+                    System.err.println("Error at " + field);
                     throw new AssertionError();
             }
         
@@ -125,7 +137,7 @@ class ReadWrite {
 }
 
 public class App {
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws FileNotFoundException {
 
         ArrayList<GradeBook> students = ReadWrite.read("input.txt");
 

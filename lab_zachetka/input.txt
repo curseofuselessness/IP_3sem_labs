@@ -8,3 +8,33 @@ grade: LinAl 7
 grade: AiSD 5
 grade: DMiML 2
 
+FIO: Bernyak Nikita Aleksandrovich
+Specialization: Applied Mathematics
+Year: 2
+Group: 6
+grade: IP 9
+grade: Calculus 9
+grade: LinAl 9
+grade: AiSD 9
+grade: DMiML 9
+
+FIO: Lazarev Arseniy Andreevich
+Specialization: Applied Mathematics
+Year: 2
+Group: 6
+grade: IP 2
+grade: Calculus 4
+grade: LinAl 4
+grade: AiSD 4
+grade: DMiML 7
+
+FIO: Lukusha Daniil Vadimovich
+Specialization: Applied Mathematics
+Year: 2
+Group: 6
+grade: IP 10
+grade: Calculus 2
+grade: LinAl 2
+grade: AiSD 1
+grade: DMiML 5
+
