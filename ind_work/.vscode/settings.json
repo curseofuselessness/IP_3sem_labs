@@ -1,0 +1,9 @@
+{
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.autobuild.enabled": false,
+    "maven.terminal.favorites": [],
+    "code-runner.executorMap": {
+        "java": "cd $workspaceRoot && mvn javafx:run"
+    },
+    "code-runner.runInTerminal": true
+}
