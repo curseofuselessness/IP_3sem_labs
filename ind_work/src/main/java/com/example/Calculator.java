@@ -74,30 +74,30 @@ public class Calculator extends Application {
     }
     
     private Button createButton(String text) {
-        Button button = new Button(text);
-        button.setPrefSize(70, 70);
-        
-        // Styles for buttons
-        if (text.matches("[0-9]")) {
-            // Nums
-            button.setStyle("-fx-font-size: 18; -fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-border-radius: 5;");
-            button.setOnMouseEntered(e -> button.setStyle("-fx-font-size: 18; -fx-background-color: #5a5a5a; -fx-text-fill: white; -fx-border-radius: 5;"));
-            button.setOnMouseExited(e -> button.setStyle("-fx-font-size: 18; -fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-border-radius: 5;"));
-        } else if (text.matches("[+\\-*/=]")) {
-            // Operations
-            button.setStyle("-fx-font-size: 18; -fx-background-color: #ff9500; -fx-text-fill: white; -fx-border-radius: 5;");
-            button.setOnMouseEntered(e -> button.setStyle("-fx-font-size: 18; -fx-background-color: #ffb143; -fx-text-fill: white; -fx-border-radius: 5;"));
-            button.setOnMouseExited(e -> button.setStyle("-fx-font-size: 18; -fx-background-color: #ff9500; -fx-text-fill: white; -fx-border-radius: 5;"));
-        } else {
-            // Special
-            button.setStyle("-fx-font-size: 16; -fx-background-color: #a6a6a6; -fx-text-fill: black; -fx-border-radius: 5;");
-            button.setOnMouseEntered(e -> button.setStyle("-fx-font-size: 16; -fx-background-color: #b6b6b6; -fx-text-fill: black; -fx-border-radius: 5;"));
-            button.setOnMouseExited(e -> button.setStyle("-fx-font-size: 16; -fx-background-color: #a6a6a6; -fx-text-fill: black; -fx-border-radius: 5;"));
-        }
-        
-        button.setOnAction(e -> handleButtonClick(text));
-        return button;
+    Button button = new Button(text);
+    button.setPrefSize(70, 70);
+    
+    // Styles
+    if (text.matches("[0-9]")) {
+        // Nums
+        button.setStyle("-fx-font-size: 18; -fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-border-radius: 5;");
+        button.setOnMouseEntered(e -> button.setStyle("-fx-font-size: 18; -fx-background-color: #5a5a5a; -fx-text-fill: white; -fx-border-radius: 5; -fx-scale-x: 1.05; -fx-scale-y: 1.05;"));
+        button.setOnMouseExited(e -> button.setStyle("-fx-font-size: 18; -fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-border-radius: 5; -fx-scale-x: 1.0; -fx-scale-y: 1.0;"));
+    } else if (text.matches("[+\\-*/=]")) {
+        // Operations
+        button.setStyle("-fx-font-size: 18; -fx-background-color: #ff9500; -fx-text-fill: white; -fx-border-radius: 5;");
+        button.setOnMouseEntered(e -> button.setStyle("-fx-font-size: 18; -fx-background-color: #ffb143; -fx-text-fill: white; -fx-border-radius: 5; -fx-scale-x: 1.05; -fx-scale-y: 1.05;"));
+        button.setOnMouseExited(e -> button.setStyle("-fx-font-size: 18; -fx-background-color: #ff9500; -fx-text-fill: white; -fx-border-radius: 5; -fx-scale-x: 1.0; -fx-scale-y: 1.0;"));
+    } else {
+        // Special
+        button.setStyle("-fx-font-size: 16; -fx-background-color: #a6a6a6; -fx-text-fill: black; -fx-border-radius: 5;");
+        button.setOnMouseEntered(e -> button.setStyle("-fx-font-size: 16; -fx-background-color: #b6b6b6; -fx-text-fill: black; -fx-border-radius: 5; -fx-scale-x: 1.05; -fx-scale-y: 1.05;"));
+        button.setOnMouseExited(e -> button.setStyle("-fx-font-size: 16; -fx-background-color: #a6a6a6; -fx-text-fill: black; -fx-border-radius: 5; -fx-scale-x: 1.0; -fx-scale-y: 1.0;"));
     }
+    
+    button.setOnAction(e -> handleButtonClick(text));
+    return button;
+}
     
     private void handleButtonClick(String value) {
         switch (value) {
@@ -172,7 +172,6 @@ public class Calculator extends Application {
             double num2 = Double.parseDouble(display.getText());
             double result = calculate(num1, num2, operator);
             
-            // Форматируем результат (убираем .0 для целых чисел)
             if (result == (long) result) {
                 display.setText(String.format("%d", (long) result));
             } else {
