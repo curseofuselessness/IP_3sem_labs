@@ -3,7 +3,7 @@
     "java.autobuild.enabled": false,
     "maven.terminal.favorites": [],
     "code-runner.executorMap": {
-        "java": "cd $workspaceRoot && mvn javafx:run"
+        "java": "mvn javafx:run"
     },
     "code-runner.runInTerminal": true
 }
