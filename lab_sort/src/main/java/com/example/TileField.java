@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javafx.geometry.Pos;
@@ -28,8 +29,7 @@ public class TileField {
         
         // КРИТИЧЕСКИ ВАЖНО: задаем размеры для строки
         RowConstraints row = new RowConstraints();
-        row.setMinHeight(200);      // Минимальная высота строки
-        row.setPrefHeight(300);     // Предпочитаемая высота
+      
         row.setValignment(VPos.BOTTOM); // выравнивание по нижнему краю
         row.setVgrow(Priority.NEVER);   // запрещаем растягивание
         this.grid.getRowConstraints().add(row);
@@ -53,9 +53,6 @@ public class TileField {
         container.setPrefSize(TILE_WIDTH, 300);
         container.getChildren().add(t.rect);
         
-        // Позиционируем прямоугольник снизу
-        t.rect.setY(300 - t.rect.getHeight());
-        
         // Добавляем контейнер в GridPane
         this.grid.add(container, column, 0);
         
@@ -65,6 +62,33 @@ public class TileField {
         // Сохраняем плитку в список
         this.Tiles.set(column, t);
         this.TilesAmount = (int) Tiles.stream().filter(tile -> tile != null).count();
+    }
+
+    public void setTiles(List<Tile> LT) {
+
+       // clearTiles();
+
+        int col = 0;
+
+        for (Tile tile : LT) {
+            addTile(tile, col++);
+        }
+
+    }
+
+    public void clearTiles() {
+        grid.getChildren().clear();
+
+        Tiles.clear();
+
+        TilesAmount = 0;
+                
+        grid.getColumnConstraints().clear();
+    }
+
+    public void swapTiles(int i, int i1) {
+        Collections.swap(Tiles, i, i1);
+        setTiles(Tiles);
     }
 
     public GridPane getGrid() {

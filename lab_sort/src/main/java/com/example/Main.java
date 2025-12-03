@@ -13,18 +13,18 @@ public class Main extends Application {
         
         Scene scene = new Scene(root, 400, 300);
         
-        // Создаем разные плитки
-        Tile tile1 = new Tile(50);  // Высота 50
-        tile1.select(true);
-        Tile tile2 = new Tile(100); // Высота 100
-        Tile tile3 = new Tile(150); // Высота 150
-        
         TileField field = new TileField();
+
+        for(int i = 1; i <= 10; i++) {
+            Tile tile1 = new Tile(i*30);  // Высота 50
+            field.addTile(tile1, i-1);
+        }
+        
+        field.swapTiles(1, 4);
         
         // Добавляем плитки в разные колонки
-        field.addTile(tile1, 0);
-        field.addTile(tile2, 1);
-        field.addTile(tile3, 2);
+        
+
         
         root.getChildren().add(field.getGrid());
         primaryStage.setTitle("Tile Field Demo");
