@@ -11,12 +11,12 @@ public class Main extends Application {
         VBox root = new VBox();
         root.setStyle("-fx-background-color: #aca9afff; -fx-padding: 20;");
         
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, 1800, 900);
         
         TileField field = new TileField();
 
-        for(int i = 1; i <= 10; i++) {
-            Tile tile1 = new Tile(i*30);  // Высота 50
+        for(int i = 1; i <= field.getTilesAmount(); i++) {
+            Tile tile1 = new Tile(i*(400f / field.getTilesAmount()));  
             field.addTile(tile1, i-1);
         }
         

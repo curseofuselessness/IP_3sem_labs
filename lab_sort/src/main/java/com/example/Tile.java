@@ -11,7 +11,7 @@ public class Tile {
     private boolean isSelected = false;
 
     Tile(double h) { // height
-        this.rect = new Rectangle(30, height); 
+        this.rect = new Rectangle(10, height); 
         this.height = h;
         this.rect.setFill(Color.WHITE); // Заливка
         this.rect.setStroke(Color.BLACK); // Граница
