@@ -15,10 +15,7 @@ public class Main extends Application {
         
         TileField field = new TileField();
 
-        for(int i = 1; i <= field.getTilesAmount(); i++) {
-            Tile tile1 = new Tile(i*(400f / field.getTilesAmount()));  
-            field.addTile(tile1, i-1);
-        }
+        field.fillRandomTiles();
         
         field.swapTiles(1, 4);
         

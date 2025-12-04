@@ -3,6 +3,7 @@ package com.example;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -41,7 +42,7 @@ public class TileField {
 
         this.grid.setHgap(0);
         this.grid.setVgap(0);
-        this.grid.setStyle("-fx-padding: 5; -fx-background-color: #f0f0f0;");
+        this.grid.setStyle("-fx-padding: 0; -fx-background-color: #333333ff;");
         
         // КРИТИЧЕСКИ ВАЖНО: задаем размеры для строки
         RowConstraints row = new RowConstraints();
@@ -53,6 +54,11 @@ public class TileField {
         // Устанавливаем размеры GridPane
         grid.setMinSize(FIELD_WIDTH, FIELD_HEIGHT);
         grid.setMaxSize(FIELD_WIDTH, FIELD_HEIGHT);
+
+        for(int i = 1; i <= getTilesAmount(); i++) {
+            Tile tile1 = new Tile(i*(400f / getTilesAmount()));  
+            addTile(tile1, i-1);
+        }
         
     }
     
@@ -141,6 +147,14 @@ public class TileField {
         }
     }
 
+    public void fillRandomTiles(){
+        Random rand = new Random();
+
+        Collections.shuffle(Tiles, rand);
+
+        setTiles(Tiles);   
+    }
+
     // Геттеры
 
     public GridPane getGrid() {
@@ -156,5 +170,9 @@ public class TileField {
     }
     public static double getFieldHeight(){
         return FIELD_HEIGHT;
+    }
+
+    public List<Tile> getTiles() {
+        return Tiles;
     }
 }
