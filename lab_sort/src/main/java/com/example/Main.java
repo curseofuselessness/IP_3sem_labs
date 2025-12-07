@@ -96,6 +96,7 @@ public class Main extends Application {
         Scene scene = new Scene(root, 900, 700);
         
         primaryStage.setTitle("Sorting Visualizer");
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

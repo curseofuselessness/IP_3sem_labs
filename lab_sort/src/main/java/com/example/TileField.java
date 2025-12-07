@@ -22,11 +22,11 @@ public class TileField {
     private SequentialTransition currentAnimation;
 
     // Настройки
-    private static final int TILE_COUNT = 50; 
+    private static final int TILE_COUNT = 43; 
     private static final double FIELD_WIDTH = 800;
     private static final double FIELD_HEIGHT = 450;
     // Вычисляем точную ширину плитки
-    private static final double TILE_WIDTH = FIELD_WIDTH / TILE_COUNT;
+    private static final double TILE_WIDTH = 20;
     
     // Скорости анимации (чем меньше, тем быстрее)
     private static final double DELAY_COMPARE = 0.02; 
