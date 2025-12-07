@@ -9,171 +9,221 @@ import javafx.animation.KeyFrame;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
-import javafx.geometry.VPos;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class TileField {
 
     private final List<Tile> tiles = new ArrayList<>();
-    private final GridPane grid = new GridPane();
+    // Используем Pane вместо GridPane для свободного движения
+    private final Pane root = new Pane();
+    
+    private SequentialTransition currentAnimation;
 
     // Настройки
-    private static final int TILE_COUNT = 60;
-    private static final double TILE_WIDTH = 10;
-    private static final double FIELD_WIDTH = 600;
-    private static final double FIELD_HEIGHT = 400;
-    private static final double DELAY_COMPARE = 0.05; // Быстрое сравнение
-    private static final double DELAY_SWAP = 0.2;     // Медленный обмен
+    private static final int TILE_COUNT = 50; 
+    private static final double FIELD_WIDTH = 800;
+    private static final double FIELD_HEIGHT = 450;
+    // Вычисляем точную ширину плитки
+    private static final double TILE_WIDTH = FIELD_WIDTH / TILE_COUNT;
+    
+    // Скорости анимации (чем меньше, тем быстрее)
+    private static final double DELAY_COMPARE = 0.02; 
+    private static final double DELAY_SWAP = 0.05;
 
     public TileField() {
-        grid.setHgap(0);
-        grid.setVgap(0);
-        grid.setStyle("-fx-background-color: #333333;");
-        grid.setMinSize(FIELD_WIDTH, FIELD_HEIGHT);
-        grid.setMaxSize(FIELD_WIDTH, FIELD_HEIGHT);
-
-        RowConstraints row = new RowConstraints();
-        row.setValignment(VPos.BOTTOM);
-        row.setVgrow(Priority.ALWAYS); // Changed to ALWAYS for better alignment
-        grid.getRowConstraints().add(row);
-
-        for (int i = 0; i < TILE_COUNT; i++) {
-            Tile t = new Tile((i + 1) * (FIELD_HEIGHT / TILE_COUNT));
-            addTile(t, i);
-        }
-    }
-
-    private void addTile(Tile t, int column) {
-        ensureColumnExists(column);
-        GridPane.setColumnIndex(t.container, column);
-        GridPane.setRowIndex(t.container, 0);
-        grid.getChildren().add(t.container);
-
-        if (tiles.size() <= column) {
-            tiles.add(t);
-        } else {
-            tiles.set(column, t);
-        }
-    }
-
-    private void ensureColumnExists(int index) {
-        while (grid.getColumnConstraints().size() <= index) {
-            ColumnConstraints col = new ColumnConstraints();
-            col.setMinWidth(TILE_WIDTH);
-            col.setPrefWidth(TILE_WIDTH);
-            col.setMaxWidth(TILE_WIDTH);
-            col.setHgrow(Priority.NEVER);
-            grid.getColumnConstraints().add(col);
-        }
+        root.setStyle("-fx-background-color: #333333; -fx-border-color: black; -fx-border-width: 2;");
+        root.setPrefSize(FIELD_WIDTH, FIELD_HEIGHT);
+        
+        // Начальное заполнение
+        fillRandomTiles();
     }
 
     //----------------------------------------------------------------------
-    // Selection Sort с предварительной симуляцией
+    // Управление состоянием
+    //----------------------------------------------------------------------
+    
+    public void fillRandomTiles() {
+        stopAllAnimations(); 
+        
+        root.getChildren().clear();
+        tiles.clear();
+        
+        Random r = new Random();
+        for (int i = 0; i < TILE_COUNT; i++) {
+            double h = 20 + (FIELD_HEIGHT - 30) * r.nextDouble();
+            
+            // Создаем плитку с точной шириной
+            Tile t = new Tile(h, TILE_WIDTH);
+            
+            // СТАВИМ ПЛИТКУ НА НУЖНУЮ КООРДИНАТУ X
+            t.container.setTranslateX(i * TILE_WIDTH);
+            // Прижимаем к низу (высота поля - высота плитки)
+            t.container.setTranslateY(FIELD_HEIGHT - h);
+            
+            root.getChildren().add(t.container);
+            tiles.add(t);
+        }
+    }
+    
+    private void stopAllAnimations() {
+        if (currentAnimation != null) {
+            currentAnimation.stop();
+        }
+        for(Tile t : tiles) t.setColor(Tile.COLOR_DEFAULT);
+    }
+
+    //----------------------------------------------------------------------
+    // 1. Selection Sort
     //----------------------------------------------------------------------
     public void startSelectionSort() {
-        SequentialTransition sequence = new SequentialTransition();
-        
-        // 1. Создаем временную копию списка для логической сортировки
-        List<Tile> simulationList = new ArrayList<>(tiles);
+        stopAllAnimations();
+        SequentialTransition seq = new SequentialTransition();
+        List<Tile> simList = new ArrayList<>(tiles);
 
-        // 2. Проходим алгоритмом по копии и записываем анимации
-        for (int i = 0; i < simulationList.size(); i++) {
+        for (int i = 0; i < simList.size(); i++) {
             int minIndex = i;
-            Tile tileI = simulationList.get(i);
+            Tile tI = simList.get(i);
+            
+            seq.getChildren().add(highlight(tI, Tile.COLOR_ACTIVE));
 
-            // Анимация: подсвечиваем текущую позицию, которую ищем
-            sequence.getChildren().add(createHighlight(tileI, Tile.COLOR_CURRENT));
+            for (int j = i + 1; j < simList.size(); j++) {
+                Tile tJ = simList.get(j);
+                Tile tMin = simList.get(minIndex);
+                
+                seq.getChildren().add(compareEffect(tJ, tMin)); 
 
-            for (int j = i + 1; j < simulationList.size(); j++) {
-                Tile tileJ = simulationList.get(j);
-                Tile tileMin = simulationList.get(minIndex);
-
-                // Анимация: сравнение (кратковременная подсветка)
-                sequence.getChildren().add(createCompareEffect(tileJ, tileMin));
-
-                if (tileJ.height < tileMin.height) {
+                if (tJ.height < tMin.height) {
                     minIndex = j;
-                    // Если нашли новый минимум - можно добавить спец. подсветку (опционально)
                 }
             }
-
-            // Анимация: убираем подсветку "текущего"
-            sequence.getChildren().add(createHighlight(tileI, Tile.COLOR_DEFAULT));
-
-            // Если минимум не на своем месте - меняем
+            
             if (minIndex != i) {
-                Tile tileA = simulationList.get(i);
-                Tile tileB = simulationList.get(minIndex);
-
-                // Логический обмен в симуляции
-                Collections.swap(simulationList, i, minIndex);
-
-                // Добавляем анимацию обмена. Важно передать целевые колонки (i и minIndex)
-                sequence.getChildren().add(createSwapAnimation(tileA, tileB, i, minIndex));
+                Tile tA = simList.get(i);
+                Tile tB = simList.get(minIndex);
+                Collections.swap(simList, i, minIndex);
+                // Передаем новые индексы для движения
+                seq.getChildren().add(swapAnim(tA, tB, i, minIndex));
             }
+            seq.getChildren().add(highlight(tI, Tile.COLOR_DEFAULT));
         }
-
-        // 3. Когда анимация закончится, обновляем реальный список tiles, 
-        // чтобы он соответствовал визуальному состоянию
-        sequence.setOnFinished(e -> {
-            tiles.clear();
-            tiles.addAll(simulationList);
-            System.out.println("Sorting finished!");
-        });
-
-        sequence.play();
+        playAnimation(seq, simList);
     }
 
-    //--- Анимационные хелперы ---
+    //----------------------------------------------------------------------
+    // 2. Bubble Sort
+    //----------------------------------------------------------------------
+    public void startBubbleSort() {
+        stopAllAnimations();
+        SequentialTransition seq = new SequentialTransition();
+        List<Tile> simList = new ArrayList<>(tiles);
+        int n = simList.size();
 
-    // Анимация обмена местами (визуальная)
-    private ParallelTransition createSwapAnimation(Tile t1, Tile t2, int col1, int col2) {
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                Tile t1 = simList.get(j);
+                Tile t2 = simList.get(j + 1);
+
+                seq.getChildren().add(compareEffect(t1, t2));
+
+                if (t1.height > t2.height) {
+                    Collections.swap(simList, j, j + 1);
+                    seq.getChildren().add(swapAnim(t1, t2, j, j + 1));
+                }
+            }
+        }
+        playAnimation(seq, simList);
+    }
+
+    //----------------------------------------------------------------------
+    // 3. Insertion Sort
+    //----------------------------------------------------------------------
+    public void startInsertionSort() {
+        stopAllAnimations();
+        SequentialTransition seq = new SequentialTransition();
+        List<Tile> simList = new ArrayList<>(tiles);
+        int n = simList.size();
+
+        for (int i = 1; i < n; i++) {
+            int j = i;
+            while (j > 0) {
+                Tile current = simList.get(j);
+                Tile left = simList.get(j - 1);
+
+                seq.getChildren().add(compareEffect(current, left));
+
+                if (current.height < left.height) {
+                    Collections.swap(simList, j, j - 1);
+                    seq.getChildren().add(swapAnim(current, left, j, j - 1));
+                    j--;
+                } else {
+                    break;
+                }
+            }
+        }
+        playAnimation(seq, simList);
+    }
+
+    //----------------------------------------------------------------------
+    // Анимации
+    //----------------------------------------------------------------------
+    private void playAnimation(SequentialTransition seq, List<Tile> finalState) {
+        currentAnimation = seq;
+        currentAnimation.setOnFinished(e -> {
+            tiles.clear();
+            tiles.addAll(finalState);
+            for(Tile t : tiles) t.setColor(Tile.COLOR_SORTED);
+        });
+        currentAnimation.play();
+    }
+
+    // ИСПРАВЛЕННЫЙ SWAP: Двигаем TranslateX
+    private ParallelTransition swapAnim(Tile t1, Tile t2, int index1, int index2) {
         ParallelTransition pt = new ParallelTransition();
-
-        Timeline timeline = new Timeline(
-            new KeyFrame(Duration.ZERO, e -> {
-                t1.setColor(Tile.COLOR_SWAP);
-                t2.setColor(Tile.COLOR_SWAP);
-            }),
+        
+        // Вычисляем новые координаты X
+        double x1 = index1 * TILE_WIDTH; // Куда должен встать t2 (на место index1)
+        double x2 = index2 * TILE_WIDTH; // Куда должен встать t1 (на место index2)
+        
+        // t1 едет на место index2
+        Timeline move1 = new Timeline(
+            new KeyFrame(Duration.ZERO, e -> t1.setColor(Tile.COLOR_SWAP)),
             new KeyFrame(Duration.seconds(DELAY_SWAP), e -> {
-                // Меняем колонки в GridPane
-                GridPane.setColumnIndex(t1.container, col2); // t1 идет на место col2
-                GridPane.setColumnIndex(t2.container, col1); // t2 идет на место col1
+                t1.container.setTranslateX(x2);
             }),
-            new KeyFrame(Duration.seconds(DELAY_SWAP * 1.5), e -> {
+             new KeyFrame(Duration.seconds(DELAY_SWAP + 0.05), e -> t1.setColor(Tile.COLOR_DEFAULT))
+        );
+        
+        // t2 едет на место index1
+        Timeline move2 = new Timeline(
+            new KeyFrame(Duration.ZERO, e -> t2.setColor(Tile.COLOR_SWAP)),
+            new KeyFrame(Duration.seconds(DELAY_SWAP), e -> {
+                t2.container.setTranslateX(x1);
+            }),
+            new KeyFrame(Duration.seconds(DELAY_SWAP + 0.05), e -> t2.setColor(Tile.COLOR_DEFAULT))
+        );
+
+        pt.getChildren().addAll(move1, move2);
+        return pt;
+    }
+
+    private Timeline compareEffect(Tile t1, Tile t2) {
+        return new Timeline(
+            new KeyFrame(Duration.ZERO, e -> {
+                t1.setColor(Tile.COLOR_COMPARE);
+                t2.setColor(Tile.COLOR_COMPARE);
+            }),
+            new KeyFrame(Duration.seconds(DELAY_COMPARE), e -> {
                 t1.setColor(Tile.COLOR_DEFAULT);
                 t2.setColor(Tile.COLOR_DEFAULT);
             })
         );
-        pt.getChildren().add(timeline);
-        return pt;
     }
 
-    // Эффект сравнения (быстро мигнуть)
-    private Timeline createCompareEffect(Tile t1, Tile t2) {
-        return new Timeline(
-            new KeyFrame(Duration.ZERO, e -> t2.setColor(Tile.COLOR_COMPARE)),
-            new KeyFrame(Duration.seconds(DELAY_COMPARE), e -> t2.setColor(Tile.COLOR_DEFAULT))
-        );
+    private Timeline highlight(Tile t, Color c) {
+        return new Timeline(new KeyFrame(Duration.ZERO, e -> t.setColor(c)));
     }
 
-    // Просто переключить цвет (надолго)
-    private Timeline createHighlight(Tile t, javafx.scene.paint.Color color) {
-        return new Timeline(
-            new KeyFrame(Duration.ZERO, e -> t.setColor(color))
-        );
-    }
-
-    public void fillRandomTiles() {
-        Collections.shuffle(tiles, new Random());
-        for (int i = 0; i < tiles.size(); i++) {
-            GridPane.setColumnIndex(tiles.get(i).container, i);
-        }
-    }
-    
-    public GridPane getGrid() { return grid; }
+    public Pane getRoot() { return root; }
 }

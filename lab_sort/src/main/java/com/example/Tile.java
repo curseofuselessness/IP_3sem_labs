@@ -11,27 +11,27 @@ public class Tile {
     public StackPane container;
     public double height;
 
-    // Цветовые константы для разных состояний
+    // Цвета
     public static final Color COLOR_DEFAULT = Color.WHITE;
-    public static final Color COLOR_CURRENT = Color.YELLOW; // Тот элемент, для которого ищем пару
-    public static final Color COLOR_COMPARE = Color.RED;    // Тот, с которым сравниваем
-    public static final Color COLOR_SWAP = Color.LIME;      // Момент обмена
+    public static final Color COLOR_ACTIVE = Color.YELLOW; 
+    public static final Color COLOR_COMPARE = Color.RED;   
+    public static final Color COLOR_SWAP = Color.ORANGE; // Цвет при обмене
+    public static final Color COLOR_SORTED = Color.LIGHTGREEN; 
 
-    public Tile(double height) {
+    public Tile(double height, double tileWidth) {
         this.height = height;
-        this.rect = new Rectangle(10, height);
+        
+        // Делаем прямоугольник чуть уже ширины слота, чтобы был зазор
+        this.rect = new Rectangle(tileWidth - 2, height);
         this.rect.setFill(COLOR_DEFAULT);
         this.rect.setStroke(Color.BLACK);
         this.rect.setStrokeWidth(1);
 
         this.container = new StackPane(rect);
-        this.container.setAlignment(Pos.BOTTOM_LEFT);
-        
-        // ВАЖНО: Не ставьте жесткую высоту PrefSize, иначе StackPane
-        // может "отталкивать" другие элементы или обрезаться.
-        // Достаточно ширины.
-        this.container.setMinWidth(10);
-        this.container.setMaxWidth(10);
+        // Выравнивание внутри контейнера - вниз
+        this.container.setAlignment(Pos.BOTTOM_CENTER);
+        // Размеры контейнера
+        this.container.setPrefSize(tileWidth, height);
     }
     
     public void setColor(Color color) {
