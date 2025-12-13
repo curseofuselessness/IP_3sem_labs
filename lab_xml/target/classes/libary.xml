@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="library.xsd">
+    
+    <!-- Фёдор Достоевский (5 книг) -->
+    <book id="1" totalCopies="5" availableCopies="3">
+        <title>Преступление и наказание</title>
+        <author>Фёдор Достоевский</author>
+        <year>1866</year>
+        <category>Роман</category>
+        <price>950.00</price>
+        <isbn>978-5-389-00101-1</isbn>
+    </book>
+    
+    <book id="2" totalCopies="4" availableCopies="1">
+        <title>Идиот</title>
+        <author>Фёдор Достоевский</author>
+        <year>1869</year>
+        <category>Роман</category>
+        <price>880.00</price>
+        <isbn>978-5-389-00102-8</isbn>
+    </book>
+    
+    <book id="3" totalCopies="3" availableCopies="0">
+        <title>Братья Карамазовы</title>
+        <author>Фёдор Достоевский</author>
+        <year>1880</year>
+        <category>Роман</category>
+        <price>1200.00</price>
+        <isbn>978-5-389-00103-5</isbn>
+    </book>
+    
+    <book id="4" totalCopies="6" availableCopies="4">
+        <title>Бесы</title>
+        <author>Фёдор Достоевский</author>
+        <year>1872</year>
+        <category>Роман</category>
+        <price>920.00</price>
+        <isbn>978-5-389-00104-2</isbn>
+    </book>
+    
+    <book id="5" totalCopies="2" availableCopies="2">
+        <title>Записки из подполья</title>
+        <author>Фёдор Достоевский</author>
+        <year>1864</year>
+        <category>Повесть</category>
+        <price>650.00</price>
+        <isbn>978-5-389-00105-9</isbn>
+    </book>
+    
+    <!-- Эрих Мария Ремарк (5 книг) -->
+    <book id="6" totalCopies="7" availableCopies="5">
+        <title>На западном фронте без перемен</title>
+        <author>Эрих Мария Ремарк</author>
+        <year>1929</year>
+        <category>Роман</category>
+        <price>850.00</price>
+        <isbn>978-5-389-00201-8</isbn>
+    </book>
+    
+    <book id="7" totalCopies="5" availableCopies="2">
+        <title>Три товарища</title>
+        <author>Эрих Мария Ремарк</author>
+        <year>1936</year>
+        <category>Роман</category>
+        <price>890.00</price>
+        <isbn>978-5-389-00202-5</isbn>
+    </book>
+    
+    <book id="8" totalCopies="4" availableCopies="3">
+        <title>Триумфальная арка</title>
+        <author>Эрих Мария Ремарк</author>
+        <year>1945</year>
+        <category>Роман</category>
+        <price>950.00</price>
+        <isbn>978-5-389-00203-2</isbn>
+    </book>
+    
+    <book id="9" totalCopies="3" availableCopies="1">
+        <title>Чёрный обелиск</title>
+        <author>Эрих Мария Ремарк</author>
+        <year>1956</year>
+        <category>Роман</category>
+        <price>820.00</price>
+        <isbn>978-5-389-00204-9</isbn>
+    </book>
+    
+    <book id="10" totalCopies="6" availableCopies="4">
+        <title>Жизнь взаймы</title>
+        <author>Эрих Мария Ремарк</author>
+        <year>1959</year>
+        <category>Роман</category>
+        <price>780.00</price>
+        <isbn>978-5-389-00205-6</isbn>
+    </book>
+    
+    <!-- Братья Стругацкие (5 книг) -->
+    <book id="11" totalCopies="8" availableCopies="6">
+        <title>Пикник на обочине</title>
+        <author>Аркадий и Борис Стругацкие</author>
+        <year>1972</year>
+        <category>Научная фантастика</category>
+        <price>750.00</price>
+        <isbn>978-5-389-00301-5</isbn>
+    </book>
+    
+    <book id="12" totalCopies="5" availableCopies="2">
+        <title>Трудно быть богом</title>
+        <author>Аркадий и Борис Стругацкие</author>
+        <year>1964</year>
+        <category>Научная фантастика</category>
+        <price>720.00</price>
+        <isbn>978-5-389-00302-2</isbn>
+    </book>
+    
+    <book id="13" totalCopies="4" availableCopies="0">
+        <title>Понедельник начинается в субботу</title>
+        <author>Аркадий и Борис Стругацкие</author>
+        <year>1965</year>
+        <category>Фантастика</category>
+        <price>680.00</price>
+        <isbn>978-5-389-00303-9</isbn>
+    </book>
+    
+    <book id="14" totalCopies="6" availableCopies="5">
+        <title>Обитаемый остров</title>
+        <author>Аркадий и Борис Стругацкие</author>
+        <year>1969</year>
+        <category>Научная фантастика</category>
+        <price>810.00</price>
+        <isbn>978-5-389-00304-6</isbn>
+    </book>
+    
+    <book id="15" totalCopies="3" availableCopies="3">
+        <title>Улитка на склоне</title>
+        <author>Аркадий и Борис Стругацкие</author>
+        <year>1966</year>
+        <category>Научная фантастика</category>
+        <price>690.00</price>
+        <isbn>978-5-389-00305-3</isbn>
+    </book>
+    
+    <!-- Дополнительные книги для разнообразия (ещё 2) -->
+    <book id="16" totalCopies="4" availableCopies="4">
+        <title>Старик и море</title>
+        <author>Эрнест Хемингуэй</author>
+        <year>1952</year>
+        <category>Повесть</category>
+        <price>550.00</price>
+        <isbn>978-5-389-00401-2</isbn>
+    </book>
+    
+    <book id="17" totalCopies="5" availableCopies="1">
+        <title>1984</title>
+        <author>Джордж Оруэлл</author>
+        <year>1949</year>
+        <category>Антиутопия</category>
+        <price>730.00</price>
+        <isbn>978-5-389-00402-9</isbn>
+    </book>
+    
+</library>
